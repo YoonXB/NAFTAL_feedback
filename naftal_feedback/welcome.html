@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Bienvenue</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-access {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-link-text {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .admin-link {
+            color: #f59e0b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .admin-link:hover {
+            text-decoration: underline;
+            color: #d97706;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <div class="logo-header">
+                <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <p class="company-tagline">Leader de la distribution pétrolière en Algérie</p>
+                </div>
+            </div>
+            
+            <div class="welcome-content">
+                <h2>Bienvenue chez NAFTAL</h2>
+                <p class="welcome-message">
+                    Nous sommes ravis de vous accueillir dans notre station-service. 
+                    Votre satisfaction est notre priorité absolue.
+                </p>
+                
+                <div class="welcome-features">
+                    <div class="feature">
+                        <div class="feature-icon">⛽</div>
+                        <h3>Carburants & Lubrifiants</h3>
+                        <p>Essence, diesel et lubrifiants de haute qualité</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🛠️</div>
+                        <h3>Services Automobiles</h3>
+                        <p>Vidange, pneumatiques, vulcanisation, station de lavage</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🏪</div>
+                        <h3>Boutique & Restauration</h3>
+                        <p>Mini-marché, restaurant, produits d'entretien</p>
+                    </div>
+                </div>
+                
+                <div class="feedback-invitation">
+                    <h3>Votre Avis Compte</h3>
+                    <p>
+                        Aidez-nous à améliorer nos services en partageant votre expérience. 
+                        Votre retour nous permettra de mieux vous servir.
+                    </p>
+                </div>
+                
+                <div class="admin-access">
+                    <p class="admin-link-text">
+                        <small>Administrateur ? <a href="admin/login.html" class="admin-link">Accéder au tableau de bord</a></small>
+                    </p>
+                </div>
+                
+                <button class="start-survey-btn" onclick="startSurvey()">
+                    Commencer l'Enquête
+                    <span class="btn-icon">→</span>
+                </button>
+                
+                <p class="survey-info">
+                    <small>⏱️ Durée estimée : 3-5 minutes</small>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function startSurvey() {
+            // Add smooth transition effect
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = 'client-info.html';
+            }, 300);
+        }
+        
+        // Add entrance animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in-out';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Système de Retours Clients</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f59e0b 0%, #1e3a8a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .redirect-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: white;
+            padding: 5px;
+        }
+        
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+        
+        .redirect-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .redirect-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .client-btn {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        
+        .redirect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .loading {
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-card">
+        <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="logo">
+        <h1>NAFTAL</h1>
+        <p>Système de Retours Clients</p>
+        
+        <div class="redirect-options">
+            <a href="welcome.html" class="redirect-btn client-btn">
+                👥 Espace Client
+            </a>
+            <a href="admin-access.html" class="redirect-btn admin-btn">
+                🔐 Espace Admin
+            </a>
+        </div>
+        
+        <div class="loading">
+            <p><small>Redirection automatique vers l'espace client dans <span id="countdown">3</span> secondes...</small></p>
+        </div>
+    </div>
+    
+    <script>
+        let countdown = 3;
+        const countdownElement = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = 'welcome.html';
+            }
+        }, 1000);
+        
+        // Stop auto-redirect if user interacts with the page
+        document.addEventListener('click', () => {
+            clearInterval(timer);
+            document.querySelector('.loading').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

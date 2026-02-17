@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Accès Administrateur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="admin-access-container">
+        <div class="admin-access-card">
+            <div class="logo-header">
+                <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <p class="company-tagline">Accès Administrateur</p>
+                </div>
+            </div>
+            
+            <div class="admin-access-content">
+                <div class="access-icon">🔐</div>
+                <h2>Zone Administrateur</h2>
+                <p class="access-message">
+                    Accédez aux outils d'administration pour consulter les statistiques 
+                    et gérer les retours clients.
+                </p>
+                
+                <div class="access-options">
+                    <div class="access-option">
+                        <div class="option-icon">📊</div>
+                        <h3>Tableau de Bord</h3>
+                        <p>Consultez les statistiques détaillées et les graphiques des retours clients</p>
+                        <a href="admin/login.html" class="access-btn primary">
+                            Accéder au Dashboard
+                        </a>
+                    </div>
+                    
+                    <div class="access-option">
+                        <div class="option-icon">📋</div>
+                        <h3>Gestion des Données</h3>
+                        <p>Accédez directement à l'ancien tableau de bord pour la gestion complète</p>
+                        <a href="admin/dashboard.php" class="access-btn secondary">
+                            Tableau Complet
+                        </a>
+                    </div>
+                    
+                    <div class="access-option">
+                        <div class="option-icon">📥</div>
+                        <h3>Export Rapide</h3>
+                        <p>Téléchargez directement les données en format CSV</p>
+                        <a href="admin/export_csv.php" class="access-btn tertiary">
+                            Télécharger CSV
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="quick-stats" id="quickStats">
+                    <h3>Aperçu Rapide</h3>
+                    <div class="stats-grid">
+                        <div class="quick-stat">
+                            <span class="stat-number" id="totalCount">-</span>
+                            <span class="stat-label">Total Retours</span>
+                        </div>
+                        <div class="quick-stat">
+                            <span class="stat-number" id="avgRating">-</span>
+                            <span class="stat-label">Satisfaction Moy.</span>
+                        </div>
+                        <div class="quick-stat">
+                            <span class="stat-number" id="recommendRate">-</span>
+                            <span class="stat-label">Recommandations</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="back-to-site">
+                    <a href="welcome.html" class="back-link">← Retour au site</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .admin-access-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f59e0b 0%, #1e3a8a 100%);
+            padding: 20px;
+        }
+        
+        .admin-access-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .admin-access-content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .access-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .admin-access-content h2 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        
+        .access-message {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .access-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .access-option {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .access-option:hover {
+            transform: translateY(-5px);
+        }
+        
+        .option-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .access-option h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .access-option p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .access-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .access-btn.primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+        
+        .access-btn.secondary {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+        }
+        
+        .access-btn.tertiary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        
+        .access-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quick-stats {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .quick-stats h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+        }
+        
+        .quick-stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2em;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .back-to-site {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .back-link {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-access-content {
+                padding: 20px;
+            }
+            
+            .access-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+    
+    <script>
+        // Load quick stats
+        fetch('admin/get-dashboard-data.php')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    document.getElementById('totalCount').textContent = data.totalFeedbacks || 0;
+                    document.getElementById('avgRating').textContent = (data.avgSatisfaction || 0).toFixed(1) + '/3';
+                    document.getElementById('recommendRate').textContent = (data.recommendationRate || 0).toFixed(1) + '%';
+                }
+            })
+            .catch(error => {
+                console.log('Stats not available:', error);
+                document.getElementById('quickStats').style.display = 'none';
+            });
+        
+        // Add entrance animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in-out';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

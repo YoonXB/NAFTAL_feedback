@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Connexion Admin</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-header">
+                <img src="../assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <p class="company-tagline">Interface d'Administration</p>
+                </div>
+            </div>
+            
+            <div class="login-content">
+                <div class="login-icon">🔐</div>
+                <h2>Connexion Administrateur</h2>
+                <p class="login-message">
+                    Accédez au tableau de bord pour consulter les statistiques des retours clients.
+                </p>
+                
+                <form id="loginForm" class="login-form" autocomplete="off">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" name="username" required 
+                               placeholder="Entrez votre nom d'utilisateur"
+                               autocomplete="off" autocapitalize="off" spellcheck="false">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required 
+                               placeholder="Entrez votre mot de passe"
+                               autocomplete="off">
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Se connecter</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    
+                    <div class="error-message" id="errorMessage" style="display: none;">
+                        Nom d'utilisateur ou mot de passe incorrect.
+                    </div>
+                </form>
+                
+                <div class="login-footer">
+                    <p><small>Mot de passe oublié ? Contactez l'administrateur système.</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Clear any stored credentials on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Clear form fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            
+            // Clear any browser stored data
+            if (typeof(Storage) !== "undefined") {
+                localStorage.removeItem('admin_credentials');
+                sessionStorage.clear();
+            }
+            
+            // Disable browser autocomplete
+            document.getElementById('loginForm').setAttribute('autocomplete', 'off');
+            
+            // Add entrance animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in-out';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+        
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const loginBtn = document.querySelector('.login-btn');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Show loading state
+            loginBtn.innerHTML = '<span class="btn-text">Connexion...</span>';
+            loginBtn.disabled = true;
+            errorMessage.style.display = 'none';
+            
+            console.log('Attempting login...');
+            
+            fetch('login-process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Login response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Login response data:', data);
+                
+                if (data.success) {
+                    console.log('Login successful, redirecting...');
+                    // Clear form before redirect
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    
+                    // Redirect to admin dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    console.log('Login failed:', data.message);
+                    errorMessage.textContent = data.message || 'Erreur de connexion';
+                    errorMessage.style.display = 'block';
+                    
+                    // Clear password field on error
+                    document.getElementById('password').value = '';
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                errorMessage.textContent = 'Erreur de connexion au serveur';
+                errorMessage.style.display = 'block';
+                
+                // Clear password field on error
+                document.getElementById('password').value = '';
+            })
+            .finally(() => {
+                loginBtn.innerHTML = '<span class="btn-text">Se connecter</span><span class="btn-icon">→</span>';
+                loginBtn.disabled = false;
+            });
+        });
+        
+        // Prevent form data from being cached
+        window.addEventListener('beforeunload', () => {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+    </script>
+</body>
+</html>

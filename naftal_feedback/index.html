@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Enquête de Satisfaction Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+    <div class="logo-header">
+        <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+        <div class="company-info">
+            <h1>NAFTAL</h1>
+            <h2>Enquête de Satisfaction Client</h2>
+        </div>
+    </div>
+</header>
+
+        <form id="feedbackForm" action="submit_feedback.php" method="POST">
+            <!-- Screen 1: VISITE -->
+            <div class="screen active" id="screen1">
+                <h3>Écran 1 : VISITE</h3>
+                
+                <div class="form-group">
+                    <label for="visit_date">1. Date de votre visite :</label>
+                    <input type="date" id="visit_date" name="visit_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="visit_time">2. Heure approximative de votre visite :</label>
+                    <input type="time" id="visit_time" name="visit_time" required>
+                </div>
+
+                <div class="form-group">
+                    <label>3. Service(s) utilisé(s) (possibilité choix multiples) :</label>
+                    <div class="checkbox-grid">
+                        <label><input type="checkbox" name="services[]" value="carburant"> Carburant (essence/diesel)</label>
+                        <label><input type="checkbox" name="services[]" value="lubrifiants"> Lubrifiants</label>
+                        <label><input type="checkbox" name="services[]" value="pneumatique"> Pneumatique</label>
+                        <label><input type="checkbox" name="services[]" value="produits_entretiens"> Produits entretiens</label>
+                        <label><input type="checkbox" name="services[]" value="station_lavage"> Station de lavage</label>
+                        <label><input type="checkbox" name="services[]" value="vidange"> Vidange</label>
+                        <label><input type="checkbox" name="services[]" value="vulcanisation"> Vulcanisation</label>
+                        <label><input type="checkbox" name="services[]" value="boutique"> Boutique/mini-marché</label>
+                        <label><input type="checkbox" name="services[]" value="restaurant"> Restaurant</label>
+                        <label><input type="checkbox" name="services[]" value="sanitaires"> Sanitaires</label>
+                        <label><input type="checkbox" name="services[]" value="salle_priere"> Salle de prière</label>
+                    </div>
+                </div>
+
+                <button type="button" class="next-btn" onclick="nextScreen()">Suivant</button>
+            </div>
+
+            <!-- Screen 2: SATISFACTION -->
+            <div class="screen" id="screen2">
+                <h3>Écran 2 : SATISFACTION</h3>
+                <p class="instruction">Veuillez évaluer votre satisfaction sur une échelle de 1 à 3, où 1 = insatisfaite et 3 = satisfaite.</p>
+
+                <div class="form-group">
+                    <label>4. Qualité et propreté générale de la station :</label>
+                    <div class="emoji-rating">
+                        <input type="radio" id="q4_3" name="station_quality" value="3" required>
+                        <label for="q4_3" class="emoji happy">😊</label>
+                        
+                        <input type="radio" id="q4_2" name="station_quality" value="2">
+                        <label for="q4_2" class="emoji neutral">😐</label>
+                        
+                        <input type="radio" id="q4_1" name="station_quality" value="1">
+                        <label for="q4_1" class="emoji sad">☹️</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>5. Propreté des sanitaires (si utilisées) :</label>
+                    <div class="emoji-rating">
+                        <input type="radio" id="q5_3" name="restroom_cleanliness" value="3">
+                        <label for="q5_3" class="emoji happy">😊</label>
+                        
+                        <input type="radio" id="q5_2" name="restroom_cleanliness" value="2">
+                        <label for="q5_2" class="emoji neutral">😐</label>
+                        
+                        <input type="radio" id="q5_1" name="restroom_cleanliness" value="1">
+                        <label for="q5_1" class="emoji sad">☹️</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>6. Rapidité du service (distribution carburant, passage en caisse, restauration) :</label>
+                    <div class="emoji-rating">
+                        <input type="radio" id="q6_3" name="service_speed" value="3" required>
+                        <label for="q6_3" class="emoji happy">😊</label>
+                        
+                        <input type="radio" id="q6_2" name="service_speed" value="2">
+                        <label for="q6_2" class="emoji neutral">😐</label>
+                        
+                        <input type="radio" id="q6_1" name="service_speed" value="1">
+                        <label for="q6_1" class="emoji sad">☹️</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>7. Amabilité et professionnalisme du personnel :</label>
+                    <div class="emoji-rating">
+                        <input type="radio" id="q7_3" name="staff_friendliness" value="3" required>
+                        <label for="q7_3" class="emoji happy">😊</label>
+                        
+                        <input type="radio" id="q7_2" name="staff_friendliness" value="2">
+                        <label for="q7_2" class="emoji neutral">😐</label>
+                        
+                        <input type="radio" id="q7_1" name="staff_friendliness" value="1">
+                        <label for="q7_1" class="emoji sad">☹️</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>8. Disponibilité des produits (carburant, articles en boutique) :</label>
+                    <div class="emoji-rating">
+                        <input type="radio" id="q8_3" name="product_availability" value="3" required>
+                        <label for="q8_3" class="emoji happy">😊</label>
+                        
+                        <input type="radio" id="q8_2" name="product_availability" value="2">
+                        <label for="q8_2" class="emoji neutral">😐</label>
+                        
+                        <input type="radio" id="q8_1" name="product_availability" value="1">
+                        <label for="q8_1" class="emoji sad">☹️</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>9. Prix des produits / services (votre perception) :</label>
+                    <div class="emoji-rating">
+                        <input type="radio" id="q9_3" name="pricing_perception" value="3" required>
+                        <label for="q9_3" class="emoji happy">😊</label>
+                        
+                        <input type="radio" id="q9_2" name="pricing_perception" value="2">
+                        <label for="q9_2" class="emoji neutral">😐</label>
+                        
+                        <input type="radio" id="q9_1" name="pricing_perception" value="1">
+                        <label for="q9_1" class="emoji sad">☹️</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevScreen()">Précédent</button>
+                    <button type="button" class="next-btn" onclick="nextScreen()">Suivant</button>
+                </div>
+            </div>
+
+            <!-- Screen 3: SUGGESTIONS ET COMMENTAIRES -->
+            <div class="screen" id="screen3">
+                <h3>Écran 3 : SUGGESTIONS ET COMMENTAIRES</h3>
+
+                <div class="form-group">
+                    <label>10. Avez-vous rencontré un problème ou un incident lors de votre visite ?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="encountered_problem" value="oui" onchange="toggleProblemDescription()"> Oui</label>
+                        <label><input type="radio" name="encountered_problem" value="non" onchange="toggleProblemDescription()"> Non</label>
+                    </div>
+                    <div id="problemDescription" class="hidden">
+                        <label for="problem_details">Si oui, veuillez décrire brièvement le problème :</label>
+                        <textarea id="problem_details" name="problem_details" maxlength="200" placeholder="Champ texte libre - 200 caractères max"></textarea>
+                        <div class="char-count">0/200</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="suggestions">11. Auriez-vous des suggestions pour améliorer nos services ?</label>
+                    <textarea id="suggestions" name="suggestions" maxlength="300" placeholder="Champ texte libre - 300 caractères max"></textarea>
+                    <div class="char-count">0/300</div>
+                </div>
+
+                <div class="form-group">
+                    <label>12. Dans l'ensemble, recommanderiez-vous cette station-service à vos proches ?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="recommendation" value="oui" required> Oui</label>
+                        <label><input type="radio" name="recommendation" value="non"> Non</label>
+                        <label><input type="radio" name="recommendation" value="peut-etre"> Peut-être</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevScreen()">Précédent</button>
+                    <button type="submit" class="submit-btn">Soumettre</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="screen-indicator">
+            <span class="step active" data-screen="1">1</span>
+            <span class="step" data-screen="2">2</span>
+            <span class="step" data-screen="3">3</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

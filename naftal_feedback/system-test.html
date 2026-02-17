@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Test Système</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-header">
+                <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <h2>Test du Système</h2>
+                </div>
+            </div>
+        </header>
+        
+        <div class="test-content" style="padding: 40px;">
+            <h3>🧪 Pages de Test</h3>
+            
+            <div class="test-section">
+                <h4>📋 Parcours Client</h4>
+                <div class="test-links">
+                    <a href="index-start.html" class="test-link">Page d'Accueil</a>
+                    <a href="welcome.html" class="test-link">Bienvenue</a>
+                    <a href="client-info.html" class="test-link">Info Client</a>
+                    <a href="index.html" class="test-link">Enquête</a>
+                    <a href="summary.html" class="test-link">Résumé</a>
+                    <a href="thank-you.html" class="test-link">Merci</a>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h4>🔐 Accès Administrateur</h4>
+                <div class="test-links">
+                    <a href="admin-access.html" class="test-link">Accès Admin</a>
+                    <a href="admin/login.html" class="test-link">Connexion Admin</a>
+                    <a href="admin/dashboard.html" class="test-link">Dashboard Moderne</a>
+                    <a href="admin/dashboard.php" class="test-link">Dashboard Complet</a>
+                </div>
+                <div class="credentials">
+                    <p><strong>Identifiants de test :</strong></p>
+                    <p>Utilisateur: <code>admin</code></p>
+                    <p>Mot de passe: <code>admin123</code></p>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h4>📊 Tests Techniques</h4>
+                <div class="test-status">
+                    <div id="phpTest" class="status-item">Test PHP...</div>
+                    <div id="dbTest" class="status-item">Test Base de données...</div>
+                    <div id="filesTest" class="status-item">Test Fichiers...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .test-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .test-section h4 {
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+        
+        .test-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .test-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #1e3a8a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        
+        .test-link:hover {
+            background: #3b82f6;
+            transform: translateY(-1px);
+        }
+        
+        .credentials {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .credentials code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        .test-status {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .status-item {
+            padding: 10px;
+            border-radius: 5px;
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-item.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-item.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+    
+    <script>
+        // Test PHP
+        fetch('submit_feedback.php')
+            .then(response => {
+                document.getElementById('phpTest').textContent = '✅ PHP fonctionne';
+                document.getElementById('phpTest').className = 'status-item success';
+            })
+            .catch(error => {
+                document.getElementById('phpTest').textContent = '❌ PHP non disponible';
+                document.getElementById('phpTest').className = 'status-item error';
+            });
+        
+        // Test Database
+        fetch('admin/get-dashboard-data.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('dbTest').textContent = '❌ Base de données: ' + data.error;
+                    document.getElementById('dbTest').className = 'status-item error';
+                } else {
+                    document.getElementById('dbTest').textContent = '✅ Base de données connectée';
+                    document.getElementById('dbTest').className = 'status-item success';
+                }
+            })
+            .catch(error => {
+                document.getElementById('dbTest').textContent = '❌ Erreur base de données';
+                document.getElementById('dbTest').className = 'status-item error';
+            });
+        
+        // Test Files
+        Promise.all([
+            fetch('styles.css'),
+            fetch('script.js'),
+            fetch('assets/naftal-logo.webp')
+        ]).then(responses => {
+            const allOk = responses.every(r => r.ok);
+            if (allOk) {
+                document.getElementById('filesTest').textContent = '✅ Tous les fichiers présents';
+                document.getElementById('filesTest').className = 'status-item success';
+            } else {
+                document.getElementById('filesTest').textContent = '⚠️ Certains fichiers manquants';
+                document.getElementById('filesTest').className = 'status-item error';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Merci pour votre retour</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="thank-you-container">
+        <div class="thank-you-card">
+            <div class="logo-header">
+                <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <p class="company-tagline">Leader de la distribution pétrolière en Algérie</p>
+                </div>
+            </div>
+            
+            <div class="thank-you-content">
+                <div class="success-icon">✅</div>
+                <h2>Merci pour votre retour !</h2>
+                
+                <p class="thank-you-message">
+                    Votre avis a été enregistré avec succès. Nous apprécions le temps que vous avez 
+                    consacré à partager votre expérience avec nous.
+                </p>
+                
+                <div class="feedback-impact">
+                    <h3>Votre contribution nous aide à :</h3>
+                    <ul>
+                        <li>Améliorer la qualité de nos services</li>
+                        <li>Former notre personnel</li>
+                        <li>Moderniser nos installations</li>
+                        <li>Mieux répondre à vos attentes</li>
+                    </ul>
+                </div>
+                
+                <div class="next-steps">
+                    <h3>Et maintenant ?</h3>
+                    <p>
+                        Notre équipe analysera votre retour dans les plus brefs délais. 
+                        Si vous avez signalé un problème, nous prendrons les mesures nécessaires 
+                        pour le résoudre rapidement.
+                    </p>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Besoin d'aide ?</h3>
+                    <p>
+                        Pour toute question urgente, n'hésitez pas à contacter notre service client :
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>+213 XXX XXX XXX</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <span>contact@naftal.dz</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="primary-btn" onclick="goHome()">
+                        Retour à l'Accueil
+                    </button>
+                    <button class="secondary-btn" onclick="newSurvey()">
+                        Nouvelle Enquête
+                    </button>
+                </div>
+                
+                <div class="social-media">
+                    <p>Suivez-nous sur :</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function goHome() {
+            window.location.href = 'welcome.html';
+        }
+        
+        function newSurvey() {
+            window.location.href = 'index.html';
+        }
+        
+        // Add entrance animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in-out';
+                document.body.style.opacity = '1';
+            }, 100);
+            
+            // Add confetti effect
+            createConfetti();
+        });
+        
+        function createConfetti() {
+            const colors = ['#3498db', '#27ae60', '#f39c12', '#e74c3c'];
+            const confettiContainer = document.createElement('div');
+            confettiContainer.className = 'confetti-container';
+            document.body.appendChild(confettiContainer);
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confettiContainer.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 50);
+            }
+            
+            setTimeout(() => {
+                confettiContainer.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

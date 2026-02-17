@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Informations Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="client-info-container">
+        <div class="client-info-card">
+            <div class="logo-header">
+                <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <p class="company-tagline">Enquête de Satisfaction Client</p>
+                </div>
+            </div>
+            
+            <div class="client-info-content">
+                <div class="info-icon">👤</div>
+                <h2>Informations Client</h2>
+                <p class="info-message">
+                    Pour personnaliser votre expérience et mieux traiter vos retours, 
+                    nous aimerions connaître quelques informations vous concernant.
+                </p>
+                
+                <form id="clientInfoForm" class="client-form">
+                    <div class="form-group">
+                        <label for="client_name">Nom et Prénom <span class="required">*</span></label>
+                        <input type="text" id="client_name" name="client_name" required 
+                               placeholder="Entrez votre nom complet" maxlength="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="client_phone">Numéro de téléphone (optionnel)</label>
+                        <input type="tel" id="client_phone" name="client_phone" 
+                               placeholder="+213 XXX XXX XXX" maxlength="20">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="client_email">Email (optionnel)</label>
+                        <input type="email" id="client_email" name="client_email" 
+                               placeholder="votre.email@exemple.com" maxlength="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Fréquence de visite</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="visit_frequency" value="premiere_fois"> Première fois</label>
+                            <label><input type="radio" name="visit_frequency" value="occasionnelle"> Occasionnelle</label>
+                            <label><input type="radio" name="visit_frequency" value="reguliere"> Régulière</label>
+                            <label><input type="radio" name="visit_frequency" value="quotidienne"> Quotidienne</label>
+                        </div>
+                    </div>
+                    
+                    <div class="privacy-notice">
+                        <div class="privacy-icon">🔒</div>
+                        <p>
+                            <strong>Confidentialité :</strong> Vos informations personnelles sont protégées 
+                            et utilisées uniquement pour améliorer nos services. Elles ne seront pas 
+                            partagées avec des tiers.
+                        </p>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="button" class="back-btn" onclick="goBack()">
+                            ← Retour
+                        </button>
+                        <button type="submit" class="continue-btn">
+                            Continuer l'enquête →
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function goBack() {
+            window.location.href = 'welcome.html';
+        }
+        
+        document.getElementById('clientInfoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Store client information in localStorage
+            const formData = new FormData(this);
+            const clientInfo = {};
+            
+            for (let [key, value] of formData.entries()) {
+                clientInfo[key] = value;
+            }
+            
+            localStorage.setItem('naftal_client_info', JSON.stringify(clientInfo));
+            
+            // Redirect to survey
+            window.location.href = 'index.html';
+        });
+        
+        // Add entrance animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in-out';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

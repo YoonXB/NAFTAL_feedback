@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Test Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f7fa; }
+        .test-card { background: white; padding: 20px; border-radius: 10px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .status { padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="test-card">
+        <h1>🧪 NAFTAL Dashboard - Test de Débogage</h1>
+        
+        <div class="info">
+            <strong>🎯 Objectif:</strong> Identifier pourquoi le dashboard reste bloqué sur "Chargement des données..."
+        </div>
+        
+        <h2>1. Tests d'Authentification</h2>
+        <button onclick="testAuth()">Test Auth Check</button>
+        <button onclick="testLogin()">Test Login Direct</button>
+        <div id="authResults"></div>
+        
+        <h2>2. Tests de Données</h2>
+        <button onclick="testDashboardData()">Test Dashboard Data</button>
+        <button onclick="testSampleData()">Charger Données d'Exemple</button>
+        <div id="dataResults"></div>
+        
+        <h2>3. Tests JavaScript</h2>
+        <button onclick="testChartJS()">Test Chart.js</button>
+        <button onclick="testConsole()">Voir Console</button>
+        <div id="jsResults"></div>
+        
+        <h2>4. Actions Rapides</h2>
+        <button onclick="goToDashboard()">Aller au Dashboard</button>
+        <button onclick="goToLogin()">Aller au Login</button>
+        <button onclick="clearSession()">Vider Session</button>
+    </div>
+    
+    <script>
+        function testAuth() {
+            document.getElementById('authResults').innerHTML = '<div class="info">Test en cours...</div>';
+            
+            fetch('check-auth.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('authResults').innerHTML = `
+                        <div class="success">✅ Auth Check OK</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('authResults').innerHTML = `
+                        <div class="error">❌ Auth Check Failed: ${error.message}</div>
+                    `;
+                });
+        }
+        
+        function testLogin() {
+            document.getElementById('authResults').innerHTML = '<div class="info">Test login en cours...</div>';
+            
+            const formData = new FormData();
+            formData.append('username', 'admin');
+            formData.append('password', 'admin123');
+            
+            fetch('login-process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('authResults').innerHTML = `
+                    <div class="success">✅ Login Test OK</div>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('authResults').innerHTML = `
+                    <div class="error">❌ Login Test Failed: ${error.message}</div>
+                `;
+            });
+        }
+        
+        function testDashboardData() {
+            document.getElementById('dataResults').innerHTML = '<div class="info">Test données en cours...</div>';
+            
+            fetch('get-dashboard-data.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('dataResults').innerHTML = `
+                        <div class="success">✅ Dashboard Data OK</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('dataResults').innerHTML = `
+                        <div class="error">❌ Dashboard Data Failed: ${error.message}</div>
+                    `;
+                });
+        }
+        
+        function testSampleData() {
+            const sampleData = {
+                totalFeedbacks: 25,
+                avgSatisfaction: 2.4,
+                recommendationRate: 76.5,
+                problemsReported: 8
+            };
+            
+            document.getElementById('dataResults').innerHTML = `
+                <div class="success">✅ Données d'exemple chargées</div>
+                <pre>${JSON.stringify(sampleData, null, 2)}</pre>
+            `;
+        }
+        
+        function testChartJS() {
+            if (typeof Chart !== 'undefined') {
+                document.getElementById('jsResults').innerHTML = `
+                    <div class="success">✅ Chart.js est chargé (version ${Chart.version})</div>
+                `;
+            } else {
+                document.getElementById('jsResults').innerHTML = `
+                    <div class="error">❌ Chart.js n'est pas chargé</div>
+                    <p>Ajout du script Chart.js...</p>
+                `;
+                
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js';
+                script.onload = () => {
+                    document.getElementById('jsResults').innerHTML = `
+                        <div class="success">✅ Chart.js chargé dynamiquement</div>
+                    `;
+                };
+                document.head.appendChild(script);
+            }
+        }
+        
+        function testConsole() {
+            console.log('=== NAFTAL Dashboard Debug ===');
+            console.log('Current URL:', window.location.href);
+            console.log('Chart.js loaded:', typeof Chart !== 'undefined');
+            console.log('Local Storage:', localStorage);
+            console.log('Session Storage:', sessionStorage);
+            
+            document.getElementById('jsResults').innerHTML = `
+                <div class="info">📝 Informations envoyées vers la console du navigateur</div>
+                <p>Ouvrez les outils de développement (F12) pour voir les détails</p>
+            `;
+        }
+        
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        function clearSession() {
+            fetch('logout.php', { method: 'POST' })
+                .then(() => {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    alert('Session vidée!');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Erreur lors du vidage de session');
+                });
+        }
+        
+        // Auto-run basic tests on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            testChartJS();
+        });
+    </script>
+</body>
+</html>

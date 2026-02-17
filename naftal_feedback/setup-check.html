@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Vérification Installation</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f7fa; }
+        .check-card { background: white; padding: 25px; border-radius: 10px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .status { padding: 15px; border-radius: 8px; margin: 10px 0; font-weight: bold; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .test-btn { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .test-btn:hover { background: #0056b3; }
+        .file-list { background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: monospace; }
+        .logo { width: 60px; height: auto; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="check-card">
+        <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="logo">
+        <h1>🔧 NAFTAL - Vérification Installation WAMP</h1>
+        
+        <div class="info">
+            <strong>📍 Emplacement attendu:</strong> C:\wamp64\www\naftal-feedback\<br>
+            <strong>🌐 URL d'accès:</strong> http://localhost/naftal-feedback/setup-check.html
+        </div>
+        
+        <h2>1. Tests Système</h2>
+        <div id="systemTests">
+            <div id="phpTest" class="status warning">🔄 Test PHP en cours...</div>
+            <div id="mysqlTest" class="status warning">🔄 Test MySQL en cours...</div>
+            <div id="filesTest" class="status warning">🔄 Test fichiers en cours...</div>
+        </div>
+        
+        <h2>2. Structure des Fichiers Requise</h2>
+        <div class="file-list">
+naftal-feedback/
+├── 📄 setup-check.html (ce fichier)
+├── 📄 welcome.html
+├── 📄 client-info.html  
+├── 📄 index.html (formulaire enquête)
+├── 📄 summary.html
+├── 📄 thank-you.html
+├── 📄 admin-access.html
+├── 📄 styles.css
+├── 📄 script.js
+├── 📄 submit_feedback.php
+├── 📁 assets/
+│   └── 🖼️ naftal-logo.webp
+├── 📁 admin/
+│   ├── 📄 login.html
+│   ├── 📄 dashboard.html
+│   ├── 📄 dashboard.php
+│   ├── 📄 login-process.php
+│   ├── 📄 get-dashboard-data.php
+│   ├── 📄 check-auth.php
+│   ├── 📄 logout.php
+│   ├── 📄 export_csv.php
+│   └── 📄 admin-styles.css
+└── 📁 scripts/
+    ├── 📄 create_database.sql
+    └── 📄 sample_data.sql
+        </div>
+        
+        <h2>3. Tests de Navigation</h2>
+        <div>
+            <button class="test-btn" onclick="testPage('welcome.html')">Test Page Bienvenue</button>
+            <button class="test-btn" onclick="testPage('client-info.html')">Test Info Client</button>
+            <button class="test-btn" onclick="testPage('index.html')">Test Enquête</button>
+            <button class="test-btn" onclick="testPage('admin-access.html')">Test Admin</button>
+        </div>
+        
+        <h2>4. Configuration Base de Données</h2>
+        <div id="dbConfig" class="status warning">
+            <strong>⚠️ Action Requise:</strong> Vous devez créer la base de données manuellement
+        </div>
+        
+        <div class="info">
+            <strong>Instructions Base de Données:</strong><br>
+            1. Allez sur <a href="http://localhost/phpmyadmin" target="_blank">phpMyAdmin</a><br>
+            2. Créez une nouvelle base de données nommée: <code>naftal_feedback</code><br>
+            3. Importez le fichier: <code>scripts/create_database.sql</code><br>
+            4. Optionnel: Importez <code>scripts/sample_data.sql</code> pour des données de test
+        </div>
+        
+        <h2>5. Démarrage Rapide</h2>
+        <div>
+            <a href="welcome.html" class="test-btn">🚀 Commencer l'Enquête</a>
+            <a href="admin-access.html" class="test-btn">🔐 Accès Admin</a>
+        </div>
+        
+        <div id="finalStatus" class="status info">
+            <strong>ℹ️ Statut:</strong> Vérification en cours...
+        </div>
+    </div>
+    
+    <script>
+        let testsCompleted = 0;
+        let testsTotal = 3;
+        let allTestsPassed = true;
+        
+        // Test PHP
+        fetch('submit_feedback.php', { method: 'GET' })
+            .then(response => {
+                document.getElementById('phpTest').className = 'status success';
+                document.getElementById('phpTest').innerHTML = '✅ <strong>PHP:</strong> Fonctionne correctement';
+                testsCompleted++;
+                checkAllTests();
+            })
+            .catch(error => {
+                document.getElementById('phpTest').className = 'status error';
+                document.getElementById('phpTest').innerHTML = '❌ <strong>PHP:</strong> Non disponible - Vérifiez que WAMP Apache est démarré';
+                allTestsPassed = false;
+                testsCompleted++;
+                checkAllTests();
+            });
+        
+        // Test MySQL via PHP
+        fetch('admin/get-dashboard-data.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error && data.error.includes('database')) {
+                    document.getElementById('mysqlTest').className = 'status warning';
+                    document.getElementById('mysqlTest').innerHTML = '⚠️ <strong>MySQL:</strong> Connecté mais base de données manquante - Créez "naftal_feedback"';
+                } else if (data.error) {
+                    document.getElementById('mysqlTest').className = 'status error';
+                    document.getElementById('mysqlTest').innerHTML = '❌ <strong>MySQL:</strong> ' + data.error;
+                    allTestsPassed = false;
+                } else {
+                    document.getElementById('mysqlTest').className = 'status success';
+                    document.getElementById('mysqlTest').innerHTML = '✅ <strong>MySQL:</strong> Base de données connectée et fonctionnelle';
+                    document.getElementById('dbConfig').className = 'status success';
+                    document.getElementById('dbConfig').innerHTML = '✅ <strong>Base de données:</strong> Configurée et prête';
+                }
+                testsCompleted++;
+                checkAllTests();
+            })
+            .catch(error => {
+                document.getElementById('mysqlTest').className = 'status error';
+                document.getElementById('mysqlTest').innerHTML = '❌ <strong>MySQL:</strong> Erreur de connexion - Vérifiez que WAMP MySQL est démarré';
+                allTestsPassed = false;
+                testsCompleted++;
+                checkAllTests();
+            });
+        
+        // Test Files
+        const filesToTest = ['welcome.html', 'styles.css', 'script.js', 'assets/naftal-logo.webp'];
+        let filesOk = 0;
+        
+        filesToTest.forEach(file => {
+            fetch(file, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) filesOk++;
+                    if (filesOk === filesToTest.length) {
+                        document.getElementById('filesTest').className = 'status success';
+                        document.getElementById('filesTest').innerHTML = '✅ <strong>Fichiers:</strong> Tous les fichiers essentiels sont présents';
+                    } else if (filesOk === 0) {
+                        document.getElementById('filesTest').className = 'status error';
+                        document.getElementById('filesTest').innerHTML = '❌ <strong>Fichiers:</strong> Fichiers manquants - Vérifiez l\'emplacement';
+                        allTestsPassed = false;
+                    }
+                    testsCompleted++;
+                    checkAllTests();
+                })
+                .catch(() => {
+                    document.getElementById('filesTest').className = 'status error';
+                    document.getElementById('filesTest').innerHTML = '❌ <strong>Fichiers:</strong> Certains fichiers sont manquants';
+                    allTestsPassed = false;
+                    testsCompleted++;
+                    checkAllTests();
+                });
+        });
+        
+        function checkAllTests() {
+            if (testsCompleted >= testsTotal) {
+                const finalStatus = document.getElementById('finalStatus');
+                if (allTestsPassed) {
+                    finalStatus.className = 'status success';
+                    finalStatus.innerHTML = '🎉 <strong>Installation Réussie!</strong> Tous les tests sont passés. Vous pouvez utiliser le système.';
+                } else {
+                    finalStatus.className = 'status error';
+                    finalStatus.innerHTML = '⚠️ <strong>Installation Incomplète:</strong> Certains problèmes doivent être résolus avant utilisation.';
+                }
+            }
+        }
+        
+        function testPage(page) {
+            window.open(page, '_blank');
+        }
+        
+        // Show current URL info
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href;
+            if (currentUrl.includes('localhost')) {
+                console.log('✅ Accès correct via localhost');
+            } else {
+                const warning = document.createElement('div');
+                warning.className = 'status error';
+                warning.innerHTML = '❌ <strong>Attention:</strong> Vous devez accéder via http://localhost/naftal-feedback/ et non file://';
+                document.querySelector('.check-card').insertBefore(warning, document.querySelector('h1').nextSibling);
+            }
+        });
+    </script>
+</body>
+</html>

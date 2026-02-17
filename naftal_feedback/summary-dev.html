@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAFTAL - Résumé de votre enquête (DEV)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="summary-container">
+        <div class="summary-card">
+            <div class="logo-header">
+                <img src="assets/naftal-logo.webp" alt="NAFTAL Logo" class="company-logo">
+                <div class="company-info">
+                    <h1>NAFTAL</h1>
+                    <p class="company-tagline">Résumé de votre enquête</p>
+                </div>
+            </div>
+            
+            <div class="summary-content">
+                <div class="summary-icon">📋</div>
+                <h2>Résumé de vos réponses</h2>
+                <p class="summary-message">
+                    Veuillez vérifier vos réponses avant de soumettre votre enquête. 
+                    Vous pouvez revenir en arrière pour modifier vos réponses si nécessaire.
+                </p>
+                
+                <div class="dev-notice" style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffc107;">
+                    <strong>🧪 Mode Développement</strong><br>
+                    Cette version fonctionne sans serveur PHP pour les tests.
+                </div>
+                
+                <div class="summary-sections">
+                    <!-- Client Information -->
+                    <div class="summary-section">
+                        <h3>👤 Informations Client</h3>
+                        <div class="summary-item">
+                            <span class="label">Nom :</span>
+                            <span class="value" id="summary-name">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Téléphone :</span>
+                            <span class="value" id="summary-phone">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Email :</span>
+                            <span class="value" id="summary-email">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Fréquence de visite :</span>
+                            <span class="value" id="summary-frequency">-</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Visit Information -->
+                    <div class="summary-section">
+                        <h3>📅 Informations de Visite</h3>
+                        <div class="summary-item">
+                            <span class="label">Date de visite :</span>
+                            <span class="value" id="summary-date">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Heure de visite :</span>
+                            <span class="value" id="summary-time">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Services utilisés :</span>
+                            <span class="value" id="summary-services">-</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Satisfaction Ratings -->
+                    <div class="summary-section">
+                        <h3>⭐ Évaluations de Satisfaction</h3>
+                        <div class="ratings-grid">
+                            <div class="rating-item">
+                                <span class="rating-label">Qualité de la station</span>
+                                <span class="rating-value" id="summary-station-quality">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-label">Propreté des sanitaires</span>
+                                <span class="rating-value" id="summary-restroom">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-label">Rapidité du service</span>
+                                <span class="rating-value" id="summary-speed">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-label">Amabilité du personnel</span>
+                                <span class="rating-value" id="summary-staff">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-label">Disponibilité des produits</span>
+                                <span class="rating-value" id="summary-availability">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-label">Perception des prix</span>
+                                <span class="rating-value" id="summary-pricing">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comments and Suggestions -->
+                    <div class="summary-section">
+                        <h3>💬 Commentaires et Suggestions</h3>
+                        <div class="summary-item">
+                            <span class="label">Problème rencontré :</span>
+                            <span class="value" id="summary-problem">-</span>
+                        </div>
+                        <div class="summary-item" id="problem-details-section" style="display: none;">
+                            <span class="label">Détails du problème :</span>
+                            <div class="comment-box" id="summary-problem-details">-</div>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Suggestions :</span>
+                            <div class="comment-box" id="summary-suggestions">-</div>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Recommandation :</span>
+                            <span class="value recommendation" id="summary-recommendation">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="back-btn" onclick="goBackToSurvey()">
+                        ← Modifier mes réponses
+                    </button>
+                    <button type="button" class="submit-final-btn" onclick="submitFinalSurveyDev()">
+                        Soumettre l'enquête ✓
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function goBackToSurvey() {
+            window.location.href = 'index.html';
+        }
+        
+        function submitFinalSurveyDev() {
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-final-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            // Simulate server processing
+            setTimeout(() => {
+                // Show success message
+                alert('✅ Enquête soumise avec succès!\n\nNote: En mode développement, les données ne sont pas sauvegardées.');
+                
+                // Clear stored data
+                localStorage.removeItem('naftal_client_info');
+                localStorage.removeItem('naftal_survey_data');
+                
+                // Redirect to thank you page
+                window.location.href = 'thank-you.html';
+            }, 2000);
+        }
+        
+        function getRatingEmoji(rating) {
+            switch(rating) {
+                case '3': return '😊 Satisfait';
+                case '2': return '😐 Neutre';
+                case '1': return '☹️ Insatisfait';
+                default: return '-';
+            }
+        }
+        
+        function formatServices(services) {
+            if (!services || services.length === 0) return '-';
+            
+            const serviceLabels = {
+                'carburant': 'Carburant (essence/diesel)',
+                'lubrifiants': 'Lubrifiants',
+                'pneumatique': 'Pneumatique',
+                'produits_entretiens': 'Produits entretiens',
+                'station_lavage': 'Station de lavage',
+                'vidange': 'Vidange',
+                'vulcanisation': 'Vulcanisation',
+                'boutique': 'Boutique/mini-marché',
+                'restaurant': 'Restaurant',
+                'sanitaires': 'Sanitaires',
+                'salle_priere': 'Salle de prière'
+            };
+            
+            return services.map(service => serviceLabels[service] || service).join(', ');
+        }
+        
+        function formatFrequency(frequency) {
+            const frequencies = {
+                'premiere_fois': 'Première fois',
+                'occasionnelle': 'Occasionnelle',
+                'reguliere': 'Régulière',
+                'quotidienne': 'Quotidienne'
+            };
+            return frequencies[frequency] || '-';
+        }
+        
+        function formatRecommendation(recommendation) {
+            const recommendations = {
+                'oui': '✅ Oui',
+                'non': '❌ Non',
+                'peut-etre': '🤔 Peut-être'
+            };
+            return recommendations[recommendation] || '-';
+        }
+        
+        // Load and display summary data
+        document.addEventListener('DOMContentLoaded', () => {
+            const clientInfo = JSON.parse(localStorage.getItem('naftal_client_info') || '{}');
+            const surveyData = JSON.parse(localStorage.getItem('naftal_survey_data') || '{}');
+            
+            // If no data, create sample data for testing
+            if (Object.keys(clientInfo).length === 0) {
+                const sampleClientInfo = {
+                    client_name: 'Test Client',
+                    client_phone: '+213 XXX XXX XXX',
+                    client_email: 'test@example.com',
+                    visit_frequency: 'reguliere'
+                };
+                localStorage.setItem('naftal_client_info', JSON.stringify(sampleClientInfo));
+                Object.assign(clientInfo, sampleClientInfo);
+            }
+            
+            if (Object.keys(surveyData).length === 0) {
+                const sampleSurveyData = {
+                    visit_date: '2024-01-15',
+                    visit_time: '14:30',
+                    services: ['carburant', 'boutique'],
+                    station_quality: '3',
+                    restroom_cleanliness: '2',
+                    service_speed: '3',
+                    staff_friendliness: '3',
+                    product_availability: '2',
+                    pricing_perception: '2',
+                    encountered_problem: 'non',
+                    problem_details: '',
+                    suggestions: 'Très bon service, continuez ainsi!',
+                    recommendation: 'oui'
+                };
+                localStorage.setItem('naftal_survey_data', JSON.stringify(sampleSurveyData));
+                Object.assign(surveyData, sampleSurveyData);
+            }
+            
+            // Client Information
+            document.getElementById('summary-name').textContent = clientInfo.client_name || '-';
+            document.getElementById('summary-phone').textContent = clientInfo.client_phone || '-';
+            document.getElementById('summary-email').textContent = clientInfo.client_email || '-';
+            document.getElementById('summary-frequency').textContent = formatFrequency(clientInfo.visit_frequency);
+            
+            // Visit Information
+            document.getElementById('summary-date').textContent = surveyData.visit_date || '-';
+            document.getElementById('summary-time').textContent = surveyData.visit_time || '-';
+            document.getElementById('summary-services').textContent = formatServices(surveyData.services);
+            
+            // Satisfaction Ratings
+            document.getElementById('summary-station-quality').textContent = getRatingEmoji(surveyData.station_quality);
+            document.getElementById('summary-restroom').textContent = getRatingEmoji(surveyData.restroom_cleanliness);
+            document.getElementById('summary-speed').textContent = getRatingEmoji(surveyData.service_speed);
+            document.getElementById('summary-staff').textContent = getRatingEmoji(surveyData.staff_friendliness);
+            document.getElementById('summary-availability').textContent = getRatingEmoji(surveyData.product_availability);
+            document.getElementById('summary-pricing').textContent = getRatingEmoji(surveyData.pricing_perception);
+            
+            // Comments and Suggestions
+            document.getElementById('summary-problem').textContent = surveyData.encountered_problem === 'oui' ? 'Oui' : 'Non';
+            
+            if (surveyData.encountered_problem === 'oui' && surveyData.problem_details) {
+                document.getElementById('problem-details-section').style.display = 'block';
+                document.getElementById('summary-problem-details').textContent = surveyData.problem_details;
+            }
+            
+            document.getElementById('summary-suggestions').textContent = surveyData.suggestions || 'Aucune suggestion';
+            document.getElementById('summary-recommendation').textContent = formatRecommendation(surveyData.recommendation);
+            
+            // Add entrance animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in-out';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
